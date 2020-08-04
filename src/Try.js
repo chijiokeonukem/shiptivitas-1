@@ -3,11 +3,21 @@ import Dragula from "dragula";
 import "./Card.css";
 
 export default class Try extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.states = {
+      pane1: React.createRef(),
+      pane2: React.createRef(),
+      pane3: React.createRef(),
+    };
+  }
+
   componentDidMount() {
     let a = [
-      document.getElementById("pane1"),
-      document.getElementById("pane2"),
-      document.getElementById("pane3"),
+      this.states.pane1.current,
+      this.states.pane2.current,
+      this.states.pane3.current,
     ];
     Dragula(a);
   }
@@ -22,7 +32,11 @@ export default class Try extends React.Component {
           <div>Pane1</div>
           <div>
             {" "}
-            <div className="Swimlane-dragColumn" id="pane1">
+            <div
+              className="Swimlane-dragColumn"
+              id="pane1"
+              ref={this.states.pane1}
+            >
               <div className="Card-title Card-green" style={{ margin: "1px" }}>
                 Drag 1_A
               </div>
@@ -43,15 +57,34 @@ export default class Try extends React.Component {
           <div>Pane2</div>
           <div>
             {" "}
-            <div className="Swimlane-dragColumn" id="pane2">
-              <div className="Card-title Card-green" style={{ margin: "1px" }}>
-                Drag 2_A
+            <div
+              className="Swimlane-dragColumn"
+              id="pane2"
+              ref={this.states.pane2}
+            >
+              <dvi>
+                <div
+                  className="Card-title Card-green"
+                  style={{ margin: "1px" }}
+                >
+                  Drag 2_A
+                </div>
+              </dvi>
+              <div>
+                <div
+                  className="Card-title Card-green"
+                  style={{ margin: "1px" }}
+                >
+                  Drag 2_B
+                </div>
               </div>
-              <div className="Card-title Card-green" style={{ margin: "1px" }}>
-                Drag 2_B
-              </div>
-              <div className="Card-title Card-green" style={{ margin: "1px" }}>
-                Drag 2_C
+              <div>
+                <div
+                  className="Card-title Card-green"
+                  style={{ margin: "1px" }}
+                >
+                  Drag 2_C
+                </div>
               </div>
             </div>
           </div>
@@ -64,7 +97,11 @@ export default class Try extends React.Component {
           <div>Pane3</div>
           <div>
             {" "}
-            <div className="Swimlane-dragColumn" id="pane3">
+            <div
+              className="Swimlane-dragColumn"
+              id="pane3"
+              ref={this.states.pane3}
+            >
               <div className="Card-title Card-green" style={{ margin: "1px" }}>
                 Drag 3_A
               </div>

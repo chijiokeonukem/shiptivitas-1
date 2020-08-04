@@ -6,9 +6,9 @@ import Dragula from "dragula";
 export default class Swimlane extends React.Component {
   componentDidMount() {
     let a = [
-      document.getElementById("inprogress"),
-      document.getElementById("complete"),
-      document.getElementById("backlog"),
+      document.getElementById("_backlog"),
+      document.getElementById("_inprogress"),
+      document.getElementById("_complete"),
     ];
     Dragula(a);
   }
@@ -33,8 +33,9 @@ export default class Swimlane extends React.Component {
 
         <div
           className="Swimlane-dragColumn"
-          id={this.props.id}
+          id={"_" + this.props.id}
           ref={this.props.dragulaRef}
+          style={{ border: "2px solid black", backgroundColor: "red" }}
         >
           {cards}
         </div>
