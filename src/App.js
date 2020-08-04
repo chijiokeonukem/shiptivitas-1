@@ -1,34 +1,38 @@
-import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import HomeTab from './HomeTab';
-import Navigation from './Navigation';
-import Board from './Board';
-import './App.css';
+import React, { Component } from "react";
+
+import "bootstrap/dist/css/bootstrap.css";
+import HomeTab from "./HomeTab";
+import Navigation from "./Navigation";
+import Board from "./Board";
+import "./App.css";
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedTab: 'home',
+      selectedTab: "home",
     };
   }
+
   renderShippingRequests() {
-    return (<Board />);
+    return <Board />;
   }
 
   renderNavigation() {
-    return (<Navigation
-      onClick={(tabName) => this.changeTab(tabName)}
-      selectedTab={this.state.selectedTab}
-      />);
+    return (
+      <Navigation
+        onClick={(tabName) => this.changeTab(tabName)}
+        selectedTab={this.state.selectedTab}
+      />
+    );
   }
 
   renderTabContent() {
-    switch(this.state.selectedTab) {
-      case 'home':
+    switch (this.state.selectedTab) {
+      case "home":
       default:
         return HomeTab();
-      case 'shipping-requests':
+      case "shipping-requests":
         return this.renderShippingRequests();
     }
   }
@@ -37,9 +41,7 @@ class App extends Component {
       <div className="App">
         {this.renderNavigation()}
 
-        <div className="App-body">
-          {this.renderTabContent()}
-        </div>
+        <div className="App-body">{this.renderTabContent()}</div>
       </div>
     );
   }
