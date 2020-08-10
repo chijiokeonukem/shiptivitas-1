@@ -1,5 +1,4 @@
 import React from "react";
-import Dragula from "dragula";
 import "./Card.css";
 
 export default class Card extends React.Component {
