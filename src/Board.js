@@ -177,7 +177,7 @@ export default class Board extends React.Component {
         */
       switch (status) {
         case "Backlog":
-          //Global and case sensitive replace
+          //Global and case-sensitive replace
           el.className = el.className.replace(
             / Card-grey| Card-blue| Card-green|" "/gi,
             ""
