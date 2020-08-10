@@ -9,6 +9,7 @@ export default class Board extends React.Component {
     super(props);
     const clients = this.getClients();
     this.state = {
+      containers: [],
       clients: {
         backlog: clients.filter(
           (client) => !client.status || client.status === "backlog"
@@ -26,27 +27,6 @@ export default class Board extends React.Component {
       inProgress: React.createRef(),
       complete: React.createRef(),
     };
-  }
-
-  componentDidMount() {
-    const components = [
-      this.swimlanes.backlog.current,
-      this.swimlanes.inProgress.current,
-      this.swimlanes.complete.current,
-    ];
-    Dragula(components)
-      .on("drag", function(el) {
-        el.className = el.className.replace("ex-moved", "");
-      })
-      .on("drop", function(el) {
-        el.className += " ex-moved";
-      })
-      .on("over", function(el, container) {
-        container.className += " ex-over";
-      })
-      .on("out", function(el, container) {
-        container.className = container.className.replace("ex-over", "");
-      }); // Modified className on drag, drop, over and out events
   }
 
   getClients() {
@@ -149,6 +129,10 @@ export default class Board extends React.Component {
     }));
   }
   renderSwimlane(name, clients, ref) {
+    this.state.containers.push(ref);
+    /* The line above adds the ref of all containers to an array,
+       making it very easy to add new containers in future 
+    */
     return <Swimlane name={name} clients={clients} dragulaRef={ref} />;
   }
 
@@ -182,5 +166,29 @@ export default class Board extends React.Component {
         </div>
       </div>
     );
+  }
+
+  //This block will be executed immediately this component (Board.js) mounts
+  componentDidMount() {
+    const containers = [];
+    this.state.containers.map((container) => {
+      //Pushing all container refs to a new array to be used by Dragula
+      containers.push(container.current);
+
+      return true;
+    });
+    Dragula(containers)
+      .on("drag", function(el) {
+        el.className = el.className.replace("ex-moved", "");
+      })
+      .on("drop", function(el) {
+        el.className += " ex-moved";
+      })
+      .on("over", function(el, container) {
+        container.className += " ex-over";
+      })
+      .on("out", function(el, container) {
+        container.className = container.className.replace("ex-over", "");
+      }); // Modified className on drag, drop, over and out events
   }
 }
