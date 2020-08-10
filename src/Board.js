@@ -35,13 +35,13 @@ export default class Board extends React.Component {
         "1",
         "Stark, White and Abbott",
         "Cloned Optimal Architecture",
-        "in-progress",
+        "backlog",
       ],
       [
         "2",
         "Wiza LLC",
         "Exclusive Bandwidth-Monitored Implementation",
-        "complete",
+        "backlog",
       ],
       [
         "3",
@@ -49,17 +49,12 @@ export default class Board extends React.Component {
         "Vision-Oriented 4Thgeneration Graphicaluserinterface",
         "backlog",
       ],
-      [
-        "4",
-        "Thompson PLC",
-        "Streamlined Regional Knowledgeuser",
-        "in-progress",
-      ],
+      ["4", "Thompson PLC", "Streamlined Regional Knowledgeuser", "backlog"],
       [
         "5",
         "Walker-Williamson",
         "Team-Oriented 6Thgeneration Matrix",
-        "in-progress",
+        "backlog",
       ],
       ["6", "Boehm and Sons", "Automated Systematic Paradigm", "backlog"],
       [
@@ -76,7 +71,7 @@ export default class Board extends React.Component {
         "backlog",
       ],
       ["10", "Romaguera Inc", "Managed Foreground Toolset", "backlog"],
-      ["11", "Reilly-King", "Future-Proofed Interactive Toolset", "complete"],
+      ["11", "Reilly-King", "Future-Proofed Interactive Toolset", "backlog"],
       [
         "12",
         "Emard, Champlin and Runolfsdottir",
@@ -87,7 +82,7 @@ export default class Board extends React.Component {
         "13",
         "Fritsch, Cronin and Wolff",
         "Open-Source 3Rdgeneration Website",
-        "complete",
+        "backlog",
       ],
       [
         "14",
@@ -95,19 +90,14 @@ export default class Board extends React.Component {
         "Profit-Focused Incremental Orchestration",
         "backlog",
       ],
-      [
-        "15",
-        "Emmerich-Ankunding",
-        "User-Centric Stable Extranet",
-        "in-progress",
-      ],
+      ["15", "Emmerich-Ankunding", "User-Centric Stable Extranet", "backlog"],
       [
         "16",
         "Willms-Abbott",
         "Progressive Bandwidth-Monitored Access",
-        "in-progress",
+        "backlog",
       ],
-      ["17", "Brekke PLC", "Intuitive User-Facing Customerloyalty", "complete"],
+      ["17", "Brekke PLC", "Intuitive User-Facing Customerloyalty", "backlog"],
       [
         "18",
         "Bins, Toy and Klocko",
@@ -181,12 +171,44 @@ export default class Board extends React.Component {
       .on("drag", function(el) {
         el.className = el.className.replace("ex-moved", "");
       })
-      .on("drop", function(el) {
-        el.className += " ex-moved";
+      .on("drop", function(el, target, source) {
+        const status = target.previousElementSibling.textContent;
+
+        /* Changing card color when droped in a target swimlane 
+          Backlog = grey
+          In Progress = blue
+          Complete = green
+        */
+        switch (status) {
+          case "Backlog":
+            el.className = el.className.replace(
+              / Card-grey| Card-blue| Card-green|" "/gi,
+              ""
+            );
+            el.className += " Card-grey";
+            break;
+          case "In Progress":
+            el.className = el.className.replace(
+              / Card-grey| Card-blue| Card-green|" "/gi,
+              ""
+            );
+            el.className += " Card-blue";
+            break;
+          case "Complete":
+            el.className = el.className.replace(
+              / Card-grey| Card-blue| Card-green|" "/gi,
+              ""
+            );
+            el.className += " Card-green";
+            break;
+          default:
+            break;
+        }
       })
       .on("over", function(el, container) {
         container.className += " ex-over";
       })
+
       .on("out", function(el, container) {
         container.className = container.className.replace("ex-over", "");
       }); // Modified className on drag, drop, over and out events
