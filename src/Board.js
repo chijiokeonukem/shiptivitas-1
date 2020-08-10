@@ -167,50 +167,40 @@ export default class Board extends React.Component {
 
       return true;
     });
-    Dragula(containers)
-      .on("drag", function(el) {
-        el.className = el.className.replace("ex-moved", "");
-      })
-      .on("drop", function(el, target, source) {
-        const status = target.previousElementSibling.textContent;
+    Dragula(containers).on("drop", function(el, target, source) {
+      const status = target.previousElementSibling.textContent;
 
-        /* Changing card color when droped in a target swimlane 
+      /* Changing card color when droped in a target swimlane 
           Backlog = grey
           In Progress = blue
           Complete = green
         */
-        switch (status) {
-          case "Backlog":
-            el.className = el.className.replace(
-              / Card-grey| Card-blue| Card-green|" "/gi,
-              ""
-            );
-            el.className += " Card-grey";
-            break;
-          case "In Progress":
-            el.className = el.className.replace(
-              / Card-grey| Card-blue| Card-green|" "/gi,
-              ""
-            );
-            el.className += " Card-blue";
-            break;
-          case "Complete":
-            el.className = el.className.replace(
-              / Card-grey| Card-blue| Card-green|" "/gi,
-              ""
-            );
-            el.className += " Card-green";
-            break;
-          default:
-            break;
-        }
-      })
-      .on("over", function(el, container) {
-        container.className += " ex-over";
-      })
-
-      .on("out", function(el, container) {
-        container.className = container.className.replace("ex-over", "");
-      }); // Modified className on drag, drop, over and out events
+      switch (status) {
+        case "Backlog":
+          //Global and case sensitive replace
+          el.className = el.className.replace(
+            / Card-grey| Card-blue| Card-green|" "/gi,
+            ""
+          );
+          el.className += " Card-grey";
+          break;
+        case "In Progress":
+          el.className = el.className.replace(
+            / Card-grey| Card-blue| Card-green|" "/gi,
+            ""
+          );
+          el.className += " Card-blue";
+          break;
+        case "Complete":
+          el.className = el.className.replace(
+            / Card-grey| Card-blue| Card-green|" "/gi,
+            ""
+          );
+          el.className += " Card-green";
+          break;
+        default:
+          break;
+      }
+    });
   }
 }
